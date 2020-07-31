@@ -1,16 +1,16 @@
-import React from 'react'
-import { Switch, Link, Route } from 'react-router-dom'
+import React from "react";
+import { Switch, Link, Route } from "react-router-dom";
 
-import './App.less'
-import routes from './routes'
+import "./App.less";
+import routes from "./routes";
 
-export default function App() {
+export default function App(props) {
   const buttonClick = () => {
-    console.log('haha shabi.')
-  }
+    console.log("haha shabi.");
+  };
   return (
     <div className="app">
-      <ul>
+      <ul className={props.styleName}>
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -32,5 +32,5 @@ export default function App() {
         ))}
       </Switch>
     </div>
-  )
+  );
 }

@@ -4,41 +4,54 @@
   "description": "react ssr demo, with react route webpack v4+",
   "main": "index.js",
   "scripts": {
-    "webpack:client": "webpack --config config/webpack.client.config.js --color --progress --hide-modules --watch",
-    "webpack:server": "webpack --config config/webpack.server.config.js --color --progress --hide-modules --watch",
-    "webpack:start": "nodemon --watch dist --exec node dist/server.js",
-    "dev": "cross-env NODE_ENV=development npm-run-all --parallel webpack:*",
-    "start": "cross-env NODE_ENV=production webpack --config config/webpack.client.config.js && webpack --config config/webpack.server.config.js && node dist/server.js"
+    "dev:client": "webpack --config config/webpack.client.config.js --color --progress --hide-modules --watch",
+    "dev:server": "webpack --config config/webpack.server.config.js --color --progress --hide-modules --watch",
+    "dev:nodemon": "nodemon dist/server.js",
+    "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:*",
+    "serve:client": "cross-env NODE_ENV=production webpack --config config/webpack.client.config.js",
+    "serve:server": "cross-env NODE_ENV=production webpack --config config/webpack.server.config.js",
+    "serve:node": "node dist/server.js",
+    "serve": "cross-env NODE_ENV=development npm-run-all --parallel serve:*"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-router-dom": "^5.0.1"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
-    "cross-env": "^5.2.0",
-    "css-loader": "^3.2.0",
+    "cross-env": "^5.2.1",
+    "css-loader": "^3.6.0",
     "html-webpack-plugin": "^3.2.0",
     "ignore-loader": "^0.1.2",
-    "less": "^3.9.0",
+    "less": "^3.12.2",
     "less-loader": "^5.0.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "nodemon": "^1.19.1",
+    "mini-css-extract-plugin": "^0.8.2",
+    "nodemon": "^1.19.4",
     "npm-run-all": "^4.1.5",
-    "style-loader": "^1.0.0",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.8.0",
-    "webpack-merge": "^4.2.1",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2",
     "webpack-node-externals": "^1.7.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/*"
+    ],
+    "delay": "1000"
   }
 }

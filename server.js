@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 
 import React from "react";
 import { StaticRouter, matchPath } from "react-router-dom";
-import { renderToString } from "react-dom/server";
+import { renderToString, renderToNodeStream } from "react-dom/server";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
@@ -101,8 +101,50 @@ app.get("*", (req, res) => {
       </Provider>
     </StaticRouter>
   );
+  if (context.statusCode === 404) {
+    return res.end(`
+    <!DOCTYPE html>
+   <html lang="en">
+     <head>
+       <meta charset="UTF-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+       <title>react ssr</title>
+     <link rel="shortcut icon" href="/public/favicon.ico"></head>
+     <body>
+       <h2>page not found</h2>`);
+  }
+  console.log("context: ", context);
+  // res.write(`<!DOCTYPE html>
+  // <html lang="en">
+  //   <head>
+  //     <meta charset="UTF-8" />
+  //     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  //     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  //     <title>react ssr</title>
+  //   <link rel="shortcut icon" href="/public/favicon.ico"><link href="/public/main.css" rel="stylesheet"></head>
+  //   <body>
+  //     <div>loading...</div>`);
+  // const stream = renderToNodeStream(
+  //   <StaticRouter location={req.url} context={context}>
+  //     <Provider store={store}>
+  //       <App />
+  //     </Provider>
+  //   </StaticRouter>
+  // );
+  // stream.pipe(res, { end: false });
+
+  // stream.on("end", () => {
+  //   setTimeout(() => {
+  //     res.end(`
+  //     <script type="text/javascript" src="/public/vendor.chunk.js"></script><script type="text/javascript" src="/public/client-bundle.js"></script></body>
+  //     <script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+  //       store.getState()
+  //     ).replace(/</g, "\\u003c")}
+  //   </script>`);
+  //   }, 3000);
+  // });
   const indexFile = path.resolve("dist/public/index.html");
-  console.log(dom);
   fs.readFile(indexFile, "utf8", (err, data) => {
     if (err) {
       console.error("Something went wrong:", err);

@@ -8,6 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 const thunkMiddleware = ({ getState, dispatch }) => (next) => (action) => {
   if (typeof action === "function") {
+    console.log(action, "=============");
     return action(dispatch);
   }
   const result = next(action);

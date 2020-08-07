@@ -1,6 +1,16 @@
 import { createStore, combineReducers } from "redux";
 
 export const btnAction = (payload) => ({ payload, type: "btnAction" });
+export const jobAction = (payload) => ({ payload, type: "jobAction" });
+export const asyncJobAction = (payload) => (dispatch) => {
+  return fetch(
+    "https://cnodejs.org/api/v1/topics?page=1&tab=job&limit=10&mdrender=false"
+  )
+    .then((res) => res.json())
+    .then(({ data }) => {
+      dispatch(jobAction(data));
+    });
+};
 export const asyncAction = (payload) => (dispatch) => {
   console.log(dispatch);
   return new Promise((resolve, reject) => {
@@ -19,6 +29,7 @@ const initialState = {
     clicked: false,
     data: null,
   },
+  jobList: [],
 };
 const btnReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -29,6 +40,11 @@ const btnReducer = (state = initialState, action) => {
           clicked: true,
           data: action.payload,
         },
+      };
+    case "jobAction":
+      return {
+        ...state,
+        jobList: action.payload,
       };
     default:
       return state;

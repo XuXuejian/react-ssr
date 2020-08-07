@@ -1,16 +1,17 @@
-import Home from './Home'
-import About from './About'
+import Home from "./Home";
+import About from "./About";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     exact: true,
-    component: Home
+    component: Home,
+    loadData: () => {},
   },
   {
-    path: '/about',
-    component: About
-  }
-]
+    path: "/about",
+    component: About,
+  },
+];
 
-export default routes
+export default routes;
